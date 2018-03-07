@@ -131,25 +131,25 @@ instance HasEndpoint (sub :: *) => HasEndpoint (QueryParams (h :: Symbol) a :> s
 instance HasEndpoint (sub :: *) => HasEndpoint (ReqBody a :> sub) where
     getEndpoint _ = getEndpoint (Proxy :: Proxy sub)
 
-instance HasEndpoint (Get a) where
+instance HasEndpoint (Get a b) where
     getEndpoint _ req = case pathInfo req of
         [] | requestMethod req == "GET" -> Just ([],"GET")
         _ -> Nothing
 
-instance HasEndpoint (Put a) where
+instance HasEndpoint (Put a b) where
     getEndpoint _ req = case pathInfo req of
         [] | requestMethod req == "PUT" -> Just ([],"PUT")
         _ -> Nothing
 
-instance HasEndpoint (Post a) where
+instance HasEndpoint (Post a b) where
     getEndpoint _ req = case pathInfo req of
         [] | requestMethod req == "POST" -> Just ([],"POST")
         _ -> Nothing
 
-instance HasEndpoint (Delete) where
+instance HasEndpoint (Delete a b) where
     getEndpoint _ req = case pathInfo req of
         [] | requestMethod req == "DELETE" -> Just ([],"DELETE")
         _ -> Nothing
 
-instance HasEndpoint (Raw) where
+instance HasEndpoint Raw where
     getEndpoint _ _ = Just ([],"RAW")

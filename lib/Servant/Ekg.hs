@@ -6,6 +6,7 @@
 {-# LANGUAGE RecordWildCards     #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeOperators       #-}
+{-# LANGUAGE PolyKinds           #-}
 module Servant.Ekg where
 
 import           Control.Concurrent.MVar
@@ -126,6 +127,9 @@ instance HasEndpoint (sub :: *) => HasEndpoint (QueryParam (h :: Symbol) a :> su
     getEndpoint _ = getEndpoint (Proxy :: Proxy sub)
 
 instance HasEndpoint (sub :: *) => HasEndpoint (QueryParams (h :: Symbol) a :> sub) where
+    getEndpoint _ = getEndpoint (Proxy :: Proxy sub)
+
+instance HasEndpoint (sub :: *) => HasEndpoint (ReqBody cts a :> sub) where
     getEndpoint _ = getEndpoint (Proxy :: Proxy sub)
 
 instance HasEndpoint (sub :: *) => HasEndpoint (ReqBody a :> sub) where

@@ -116,7 +116,7 @@ instance (KnownSymbol (capture :: Symbol), HasEndpoint (sub :: *)) => HasEndpoin
         case pathInfo req of
             _:ps -> do
                 (end, method) <- getEndpoint (Proxy :: Proxy sub) req{ pathInfo = ps }
-                let p = T.pack $ (':':) $ symbolVal (Proxy :: Proxy capture)
+                let p = T.pack $ symbolVal (Proxy :: Proxy capture) <> "__"
                 return (p:end, method)
             _ -> Nothing
 
